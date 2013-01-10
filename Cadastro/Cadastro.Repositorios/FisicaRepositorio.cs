@@ -10,22 +10,71 @@ namespace Cadastro.Repositorios
 {
     public class FisicaRepositorio
     {
-        private List<Fisica> pessoasFisicas = new List<Fisica>();
-        private IDAL<Fisica> dao = DaoFactory.GetFisicaDao();
+        private IDAL<Fisica> fisicaDao;
+        private IDAL<Telefone> telefoneDao;
 
-        public void Salvar(Fisica pessoa)
+        public FisicaRepositorio()
         {
-            pessoasFisicas.Add(pessoa);
+            fisicaDao = DaoFactory.GetFisicaDao();
+            telefoneDao = DaoFactory.GetTelefoneDao();
+        }
+
+        public void Inserir(Fisica pessoa)
+        {
+            fisicaDao.Insert(pessoa);
+
+            foreach (var telefone in pessoa.Telefones)
+            {
+                telefoneDao.Insert(telefone);
+            }
+        }
+
+        public void Editar(Fisica pessoa)
+        {
+            fisicaDao.Update(pessoa);
+            telefoneDao.Delete(pessoa.ID);
+
+            foreach (var telefone in pessoa.Telefones)
+            {
+                telefoneDao.Insert(telefone);
+            }
         }
 
         public void Excluir(Fisica pessoa)
         {
-            pessoasFisicas.Remove(pessoa);
+            fisicaDao.Delete(pessoa);
+            telefoneDao.Delete(pessoa.ID);
         }
 
-        public Pessoa Buscar(Guid id)
+        public Fisica Obter(Guid id)
         {
-            return pessoasFisicas.FirstOrDefault(p => p.ID == id);
+            Fisica fisica = fisicaDao.Get(id);
+
+            List<Telefone> telefones = telefoneDao.GetList(id);
+
+            foreach (var telefone in telefones)
+            {
+                fisica.InserirTelefone(telefone.DDD, telefone.Numero);
+            }
+
+            return fisica;
+        }
+
+        public List<Fisica> ObterTodos()
+        {
+            List<Fisica> fisicas = fisicaDao.GetAll();
+
+            foreach (var fisica in fisicas)
+            {
+                List<Telefone> telefones = telefoneDao.GetList(fisica.ID);
+
+                foreach (var telefone in telefones)
+                {
+                    fisica.InserirTelefone(telefone.DDD, telefone.Numero);
+                }
+            }
+
+            return fisicas;
         }
     }
 }

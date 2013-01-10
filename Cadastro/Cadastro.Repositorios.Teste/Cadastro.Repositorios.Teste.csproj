@@ -3,15 +3,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.30703</ProductVersion>
+    <ProductVersion>
+    </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{D2A63467-5C6F-4435-BDEA-EC2BF5448784}</ProjectGuid>
+    <ProjectGuid>{3D8177A6-07E0-4110-B943-68E225FA0A84}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cadastro.DAL.SqlProvider</RootNamespace>
-    <AssemblyName>Cadastro.DAL.SqlProvider</AssemblyName>
+    <RootNamespace>Cadastro.Repositorios.Teste</RootNamespace>
+    <AssemblyName>Cadastro.Repositorios.Teste</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,35 +33,45 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Data.SqlServerCe, Version=3.5.1.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Arquivos de programas\Microsoft SQL Server Compact Edition\v3.5\Private\System.Data.SqlServerCe.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseDao.cs" />
-    <Compile Include="FisicaDao.cs" />
+    <CodeAnalysisDependentAssemblyPaths Condition=" '$(VS100COMNTOOLS)' != '' " Include="$(VS100COMNTOOLS)..\IDE\PrivateAssemblies">
+      <Visible>False</Visible>
+    </CodeAnalysisDependentAssemblyPaths>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="FisicaRepositorioTeste.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TelefoneDao.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Cadastro.DAL\Cadastro.DAL.csproj">
       <Project>{A64E60D9-FF2A-4DF8-A075-A01FC8A852F9}</Project>
       <Name>Cadastro.DAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Cadastro.Factory\Cadastro.Factory.csproj">
+      <Project>{93B25721-38D6-49C3-92AE-034A88AF1205}</Project>
+      <Name>Cadastro.Factory</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Cadastro.Model\Cadastro.Model.csproj">
       <Project>{10170762-2E84-4FEA-AB15-C2AF33245679}</Project>
       <Name>Cadastro.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Cadastro.Repositorios\Cadastro.Repositorios.csproj">
+      <Project>{9031CD8B-1745-4733-91D8-23F74AC9596B}</Project>
+      <Name>Cadastro.Repositorios</Name>
+    </ProjectReference>
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

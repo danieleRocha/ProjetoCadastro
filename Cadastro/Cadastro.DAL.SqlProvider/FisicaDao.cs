@@ -30,6 +30,11 @@ namespace Cadastro.DAL.SqlProvider
             return "DELETE FROM FISICA WHERE ID = '" + entidade.ID + "'";
         }
 
+        protected override string ObterComandoDelete(Guid id)
+        {
+            return "DELETE FROM FISICA WHERE ID = '" + id + "'";
+        }
+
         protected override string ObterComandoInsert(Fisica entidade)
         {
             return String.Format("INSERT INTO FISICA (ID, NOME, IDADE, SEXO) VALUES ('{0}', '{1}', {2}, '{3}')",
@@ -45,8 +50,7 @@ namespace Cadastro.DAL.SqlProvider
                     Idade = int.Parse(reader[2].ToString()),
                     Sexo = reader[3].ToString()
                 };
-            //fisica.Telefones = ???
-
+            
             return fisica;
         }
 

@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using Cadastro.Model;
+using System.IO;
+using System.Reflection;
 
 namespace Cadastro.DAL.SqlProvider
 {
     public abstract class BaseDao<T> : IDAL<T>
     {
-        private string connectionString = string.Empty;
-
+        private static string localDaBase = Directory.GetParent(Assembly.GetExecutingAssembly().Location).Parent.Parent.Parent.FullName +@"\BaseDeTeste.mdf";
+        private static string ConnectionString = "Data Source=.\\SQLEXPRESS;AttachDbFilename=" + localDaBase + ";Integrated Security=True;Connect Timeout=30;User Instance=True";
+       
         public List<T> GetAll()
         {
             List<T> entidades = new List<T>();
@@ -39,9 +41,32 @@ namespace Cadastro.DAL.SqlProvider
             return entidade;
         }
 
+        public List<T> GetList(Guid id)
+        {
+            List<T> entidades = new List<T>();
+
+            ExecutarReader(ObterComandoSelect(id), reader =>
+            {
+                while (reader.Read())
+                {
+                    entidades.Add(HidratarEntidade(reader));
+                }
+            });
+
+            return entidades;
+        }
+
         public void Insert(T entidade)
         {
             ExecutarProcesso(ObterComandoInsert(entidade), command =>
+            {
+                command.ExecuteNonQuery();
+            });
+        }
+
+        public void Delete(Guid id)
+        {
+            ExecutarProcesso(ObterComandoDelete(id), command =>
             {
                 command.ExecuteNonQuery();
             });
@@ -93,7 +118,7 @@ namespace Cadastro.DAL.SqlProvider
 
         private static SqlConnection GetConnection()
         {
-            return new SqlConnection("Data Source=.\\SQLEXPRESS;AttachDbFilename=\"C:\\Documents and Settings\\Daniele\\Desktop\\BaseDeTeste.mdf\";Integrated Security=True;Connect Timeout=30;User Instance=True");
+            return new SqlConnection(ConnectionString);
         }
 
         private static SqlCommand GetCommand(SqlConnection connection, string command)
@@ -108,6 +133,8 @@ namespace Cadastro.DAL.SqlProvider
         protected abstract string ObterComandoUpdate(T entidade);
 
         protected abstract string ObterComandoDelete(T entidade);
+
+        protected abstract string ObterComandoDelete(Guid id);
 
         protected abstract string ObterComandoInsert(T entidade);
 

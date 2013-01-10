@@ -14,54 +14,39 @@ namespace Cadastro.DAL.SqlProvider.Teste
         [DeploymentItem("Cadastro.DAL.SqlProvider.dll")]
         public void InsertTelefoneTeste()
         {
-            Telefone telefoneTeste = new Telefone
-                       {
-                           ID = Guid.NewGuid(),
-                           DDD = 21,
-                           Numero = 21213344,
-                       };
+            Telefone telefoneTeste = new Telefone(IdPessoa: Guid.NewGuid(), DDD: 21, Numero: 21213344);
 
             IDAL<Telefone> dao = Factory.DaoFactory.GetTelefoneDao();
             dao.Insert(telefoneTeste);
+
+            Guid id = telefoneTeste.IdPessoa;
+            Telefone telefone = dao.Get(id);
+
+            Assert.AreEqual(id, telefone.IdPessoa);
         }
 
         [TestMethod()]
         [DeploymentItem("Cadastro.DAL.SqlProvider.dll")]
         public void GetTelefoneTeste()
         {
-            Telefone telefoneTeste = new Telefone
-            {
-                ID = Guid.NewGuid(),
-                DDD = 21,
-                Numero = 21213344,
-            };
+            Telefone telefoneTeste = new Telefone(IdPessoa : Guid.NewGuid(),DDD : 21,Numero : 21213344);
 
             IDAL<Telefone> dao = Factory.DaoFactory.GetTelefoneDao();
             dao.Insert(telefoneTeste);
 
-            Guid id = telefoneTeste.ID;
+            Guid id = telefoneTeste.IdPessoa;
             Telefone telefone = dao.Get(id);
 
-            Assert.AreEqual(id, telefone.ID);
+            Assert.AreEqual(id, telefone.IdPessoa);
         }
 
         [TestMethod()]
         [DeploymentItem("Cadastro.DAL.SqlProvider.dll")]
         public void GetAllTelefoneTeste()
         {
-            Telefone telefoneTeste = new Telefone
-            {
-                ID = Guid.NewGuid(),
-                DDD = 21,
-                Numero = 21213344,
-            };
+            Telefone telefoneTeste = new Telefone(IdPessoa : Guid.NewGuid(),DDD: 21,Numero: 21213344);
 
-            Telefone telefoneTeste2 = new Telefone
-            {
-                ID = Guid.NewGuid(),
-                DDD = 51,
-                Numero = 51513344,
-            };
+            Telefone telefoneTeste2 = new Telefone(IdPessoa : Guid.NewGuid(),DDD : 51,Numero : 51513344);
 
             IDAL<Telefone> dao = Factory.DaoFactory.GetTelefoneDao();
             dao.Insert(telefoneTeste);
@@ -74,9 +59,9 @@ namespace Cadastro.DAL.SqlProvider.Teste
 
             foreach (var fisica in listaObtida)
             {
-                if (fisica.ID == telefoneTeste.ID)
+                if (fisica.IdPessoa == telefoneTeste.IdPessoa)
                     encontrouTelefone = true;
-                if (fisica.ID == telefoneTeste2.ID)
+                if (fisica.IdPessoa == telefoneTeste2.IdPessoa)
                     encontrouTelefone2 = true;
             }
 
@@ -89,17 +74,12 @@ namespace Cadastro.DAL.SqlProvider.Teste
         [DeploymentItem("Cadastro.DAL.SqlProvider.dll")]
         public void UpdateTelefoneTeste()
         {
-            Telefone telefoneTeste = new Telefone
-            {
-                ID = Guid.NewGuid(),
-                DDD = 21,
-                Numero = 21213344,
-            };
+            Telefone telefoneTeste = new Telefone(IdPessoa : Guid.NewGuid(),DDD : 21,Numero : 21213344);
 
             IDAL<Telefone> dao = Factory.DaoFactory.GetTelefoneDao();
             dao.Insert(telefoneTeste);
 
-            Guid id = telefoneTeste.ID;
+            Guid id = telefoneTeste.IdPessoa;
             Telefone telefone = dao.Get(id);
 
             const int novoDdd = 29;
@@ -119,17 +99,13 @@ namespace Cadastro.DAL.SqlProvider.Teste
         [DeploymentItem("Cadastro.DAL.SqlProvider.dll")]
         public void DeleteTelefoneTeste()
         {
-            Telefone telefoneTeste = new Telefone
-            {
-                ID = Guid.NewGuid(),
-                DDD = 21,
-                Numero = 21213344,
-            };
+            Telefone telefoneTeste = new Telefone(IdPessoa: Guid.NewGuid(), DDD: 21, Numero: 21213344);
 
             IDAL<Telefone> dao = Factory.DaoFactory.GetTelefoneDao();
             dao.Insert(telefoneTeste);
 
-            Guid id = telefoneTeste.ID;
+            Guid id = telefoneTeste.IdPessoa;
+
             dao.Delete(telefoneTeste);
 
             Telefone telefone = dao.Get(id);

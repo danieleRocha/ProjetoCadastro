@@ -24,6 +24,11 @@ namespace Cadastro.DAL.SqlProvider.Teste
 
             IDAL<Fisica> dao = Factory.DaoFactory.GetFisicaDao();
             dao.Insert(fisicaTeste);
+
+            Guid id = fisicaTeste.ID;
+            Fisica fisica = dao.Get(id);
+
+            Assert.AreEqual(id, fisica.ID);
         }
 
         [TestMethod()]
